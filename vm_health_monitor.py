@@ -1,9 +1,10 @@
 import psutil  
 import argparse  
 
+
 def check_vm_health():  
     # Get CPU, Memory, and Disk Usage  
-    cpu_usage = psutil.cpu_percent()  
+    cpu_usage = psutil.cpu_percent(interval=1)  
     memory_usage = psutil.virtual_memory().percent  
     disk_usage = psutil.disk_usage('/').percent  
     
@@ -21,6 +22,7 @@ def check_vm_health():
         reasons.append(f'Disk usage is at {disk_usage}%.')  
     
     return healthy, reasons  
+
 
 if __name__ == '__main__':  
     parser = argparse.ArgumentParser(description='Check VM Health')  
