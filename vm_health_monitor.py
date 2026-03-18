@@ -21,19 +21,24 @@ def check_vm_health():
         healthy = False  
         reasons.append(f'Disk usage is at {disk_usage}%.')  
     
-    return healthy, reasons  
+    return healthy, reasons, cpu_usage, memory_usage, disk_usage  
 
 
 if __name__ == '__main__':  
     parser = argparse.ArgumentParser(description='Check VM Health')  
     parser.add_argument('--explain', action='store_true', help='Display detailed explanation of health status.')  
     args = parser.parse_args()  
-    healthy, reasons = check_vm_health()  
+    healthy, reasons, cpu_usage, memory_usage, disk_usage = check_vm_health()  
     
     if healthy:  
         print('The virtual machine is healthy.')  
     else:  
         print('The virtual machine is not healthy.')  
-        if args.explain:  
+    
+    if args.explain:  
+        print(f'CPU usage: {cpu_usage}%')  
+        print(f'Memory usage: {memory_usage}%')  
+        print(f'Disk usage: {disk_usage}%')  
+        if not healthy:  
             for reason in reasons:  
                 print(reason)  
